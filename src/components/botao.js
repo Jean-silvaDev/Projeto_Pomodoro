@@ -1,30 +1,30 @@
-import { Play } from 'lucide-react';
+import { TouchableOpacity } from "react-native";
 
-export function Botao() {
+export function Botao({ children, onPress, color }) {
   return (
-    <button style={styles.botao}>
-        <Play style={styles.icon} />
-    </button>
+    <TouchableOpacity onPress={onPress} style={color == 'red' ? styles.botaoRed : styles.botaoPurple}>
+        {children}
+    </TouchableOpacity>
   );
 }
 
 const styles = {
-  botao: {
-    borderRadius: "100%",
-    width: "6vw",
-    height: "20vh",
-    borderColor: 'white',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  icon: {
-    width: "4vw",
-    height: "12vh",
-    backgroundColor: 'white',
+  botaoRed: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'red',
     fill: 'red',
     color: 'red',
-    borderRadius: 60,
+    borderColor: 'red',
+    margin: 20,
+  },
+  botaoPurple: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#3E2D7C',
+    fill: '#3E2D7C',
+    color: '#3E2D7C',
+    borderColor: '#3E2D7C',
+    margin: 20,
   }
 };
