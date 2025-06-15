@@ -1,9 +1,9 @@
 import { View } from 'react-native-web';
-import Foco from './src/pages/foco';
+import Foco from './pages/foco';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-import { DescansoCurto } from './src/pages/descansoCurto';
+import { DescansoCurto } from './pages/descansoCurto';
 
 export default function App() {
   return (
