@@ -1,10 +1,9 @@
-import { TextInput, View } from "react-native-web";
 import { Cronometro } from "../components/cronometro";
 import { Botao } from "../components/botao";
 import { CircleHelp, CirclePlay, SkipForward } from "lucide-react";
 import { Estados } from "../components/estados";
 import { Texto } from "../components/texto";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export function DescansoCurto({ navigation }) {
   return (

@@ -9,7 +9,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRoute="home" >
+        <Stack.Navigator initialRoute="home" screenOptions={{ headerShown: false}} >
           <Stack.Screen name="home" component={Foco} />
           <Stack.Screen name="foco" component={Foco} />
           <Stack.Screen name="descansoCurto" component={DescansoCurto} />

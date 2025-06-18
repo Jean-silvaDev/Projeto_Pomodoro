@@ -1,9 +1,8 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Cronometro } from '../components/cronometro';
 import { Botao } from '../components/botao';
 import { Estados } from '../components/estados';
 import { Texto } from '../components/texto';
-import { TextInput } from 'react-native-web';
 import { CircleHelp, CirclePlay, SkipForward  } from 'lucide-react';
 
 export default function Foco({ navigation }) {
