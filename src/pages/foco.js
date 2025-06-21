@@ -8,7 +8,7 @@ import { CircleHelp, CirclePlay, SkipForward  } from 'lucide-react';
 export default function Foco({ navigation }) {
   return (
     <View style={styles.container}>
-      <Cronometro color={'red'} time={'25:00'} /> 
+      <Cronometro color={'red'} time={25} /> 
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Botao color={'red'}>
           <CirclePlay style={styles.icon} />

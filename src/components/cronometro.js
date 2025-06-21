@@ -3,22 +3,44 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export function Cronometro({ color, time }) {
   const [ timer, setTimer ] = useState('00:00');
-
+  const [ date, setDate ] = useState();
   
   function getTime() {
     const now = new Date();
-    const valueNow = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-    return String(valueNow.getMinutes()).padStart(2, '0') + ':' + String(valueNow.getSeconds()).padStart(2, '0');
+    if (date == null) {
+      now.setMinutes(now.getMinutes() + time);
+      setDate(now);
+    }
+    return now;
+  }
+
+  function getTimeFormat(date) {
+    if (date == null) {
+      return '00:00';
+    }
+    const dateF = new Date(date);
+    const minutes = String(dateF.getMinutes()).padStart(2, '0');
+    const seconds = String(dateF.getSeconds()).padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }
+
+
+  function getTimeDivided() {
+    const timerNow = date - getTime();
+    if (timerNow < 0) {
+      return null;
+    }
+    return date - getTime();
   }
   
   useEffect(() => {
     setTimeout(() => {setTimer((timer) => timer + 1)}, 1000);
     setTimer(getTime());
-  });
+  }); 
   
   return (
     <View style={color == 'red' ? styles.containerRed : styles.containerPurple}>
-      <Text style={styles.cronometro}>{timer}</Text>
+      <Text style={styles.cronometro}>{getTimeFormat(getTimeDivided())}</Text>
     </View>
   );
 }

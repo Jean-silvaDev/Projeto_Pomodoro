@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native";
 export function DescansoCurto({ navigation }) {
   return (
     <View style={styles.container}>
-        <Cronometro color={'purple'} time={'15:00'} />
+        <Cronometro color={'purple'} time={5} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Botao color={'purple'}>
                 <CirclePlay style={styles.icon} />
