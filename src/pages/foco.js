@@ -3,15 +3,22 @@ import { Cronometro } from '../components/cronometro';
 import { Botao } from '../components/botao';
 import { Estados } from '../components/estados';
 import { Texto } from '../components/texto';
-import { CircleHelp, CirclePlay, SkipForward  } from 'lucide-react';
+import { CircleHelp, CirclePlay, PauseCircle, SkipForward  } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Foco({ navigation }) {
+  const [start, setStart] = useState(false);
+
+  const handleStart = () => {
+    setStart(!start);
+  };
+
   return (
     <View style={styles.container}>
-      <Cronometro color={'red'} time={25} /> 
+      <Cronometro color={'red'} time={25} start={start} /> 
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        <Botao color={'red'}>
-          <CirclePlay style={styles.icon} />
+        <Botao color={'red'} onPress={handleStart}>
+          {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
         </Botao>
         <Botao color={'red'} onPress={() => navigation.navigate('descansoCurto')}>
           <SkipForward style={styles.iconNext}/>

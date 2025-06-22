@@ -1,17 +1,24 @@
 import { Cronometro } from "../components/cronometro";
 import { Botao } from "../components/botao";
-import { CircleHelp, CirclePlay, SkipForward } from "lucide-react";
+import { CircleHelp, CirclePlay, PauseCircle, SkipForward } from "lucide-react";
 import { Estados } from "../components/estados";
 import { Texto } from "../components/texto";
 import { StyleSheet, View } from "react-native";
+import { useState } from "react";
 
 export function DescansoCurto({ navigation }) {
+  const [start, setStart] = useState(false);
+  
+  const handleStart = () => {
+    setStart(!start);
+  };
+
   return (
     <View style={styles.container}>
-        <Cronometro color={'purple'} time={5} />
+        <Cronometro color={'purple'} time={5} start={start} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <Botao color={'purple'}>
-                <CirclePlay style={styles.icon} />
+            <Botao color={'purple'} onPress={handleStart}>
+              {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
             </Botao>
             <Botao color={'purple'} onPress={() => navigation.navigate('foco')}>
                 <SkipForward style={styles.iconNext}/>

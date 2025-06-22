@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export function Cronometro({ color, time }) {
+export function Cronometro({ color, time, start }) {
   const [ timer, setTimer ] = useState('00:00');
   const [ date, setDate ] = useState();
   
@@ -17,6 +17,10 @@ export function Cronometro({ color, time }) {
   function getTimeFormat(date) {
     if (date == null) {
       return '00:00';
+    }
+
+    if (start === false) {
+      return time === 5 ? `0${time}:00` : `${time}:00`;
     }
     const dateF = new Date(date);
     const minutes = String(dateF.getMinutes()).padStart(2, '0');
@@ -36,7 +40,10 @@ export function Cronometro({ color, time }) {
   useEffect(() => {
     setTimeout(() => {setTimer((timer) => timer + 1)}, 1000);
     setTimer(getTime());
-  }); 
+    if (start === false) {
+      setDate(null);
+    }
+  }, [Date.now(), start]); 
   
   return (
     <View style={color == 'red' ? styles.containerRed : styles.containerPurple}>
