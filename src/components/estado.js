@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export function Estado({ color }) {
   return (
-    <div style={color == 'red' ? styles.containerRed : styles.containerPurple} />
+    <div style={color == 'red' ? styles.containerRed : (color == 'purple' ? styles.containerPurple : styles.containerGreen)} />
   );
 }
 
@@ -21,6 +21,18 @@ const styles = StyleSheet.create({
   },
   containerPurple: {
     backgroundColor: '#3E2D7C',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'white',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderRadius: "100%",
+    width: 15,
+    height: 15,
+    flexDirection: 'row',
+  },
+  containerGreen: {
+    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'white',

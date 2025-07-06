@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import { DescansoCurto } from './pages/descansoCurto';
+import { DescansoLongo } from './pages/descansoLongo';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Stack.Screen name="home" component={Foco} />
           <Stack.Screen name="foco" component={Foco} />
           <Stack.Screen name="descansoCurto" component={DescansoCurto} />
+          <Stack.Screen name="descansoLongo" component={DescansoLongo} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

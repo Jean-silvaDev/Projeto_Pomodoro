@@ -46,7 +46,7 @@ export function Cronometro({ color, time, start }) {
   }, [Date.now(), start]); 
   
   return (
-    <View style={color == 'red' ? styles.containerRed : styles.containerPurple}>
+    <View style={color == 'red' ? styles.containerRed : (color == 'purple' ? styles.containerPurple : styles.containerGreen)}>
       <Text style={styles.cronometro}>{getTimeFormat(getTimeDivided())}</Text>
     </View>
   );
@@ -66,6 +66,17 @@ const styles = StyleSheet.create({
   },
   containerPurple: {
     backgroundColor: '#3E2D7C',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: "100%",
+    width: 150,
+    height: 150,
+    margin: 20,
+  },
+  containerGreen: {
+    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'white',

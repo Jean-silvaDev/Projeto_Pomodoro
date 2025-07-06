@@ -2,7 +2,7 @@ import { TouchableOpacity } from "react-native";
 
 export function Botao({ children, onPress, color }) {
   return (
-    <TouchableOpacity onPress={onPress} style={color == 'red' ? styles.botaoRed : styles.botaoPurple}>
+    <TouchableOpacity onPress={onPress} style={color == 'red' ? styles.botaoRed : (color == 'purple' ? styles.botaoPurple : styles.botaoGreen)}>
         {children}
     </TouchableOpacity>
   );
@@ -25,6 +25,15 @@ const styles = {
     fill: '#3E2D7C',
     color: '#3E2D7C',
     borderColor: '#3E2D7C',
+    margin: 20,
+  },
+  botaoGreen: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'green',
+    fill: 'green',
+    color: 'green',
+    borderColor: 'green',
     margin: 20,
   }
 };

@@ -6,7 +6,7 @@ import { Texto } from "../components/texto";
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 
-export function DescansoCurto({ navigation }) {
+export function DescansoLongo({ navigation }) {
   const [start, setStart] = useState(false);
   
   const handleStart = () => {
@@ -15,19 +15,19 @@ export function DescansoCurto({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Cronometro color={'purple'} time={5} start={start} />
+        <Cronometro color={'green'} time={15} start={start} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <Botao color={'purple'} onPress={handleStart}>
+            <Botao color={'green'} onPress={handleStart}>
               {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
             </Botao>
-            <Botao color={'purple'} onPress={() => navigation.navigate('descansoLongo')}>
+            <Botao color={'green'} onPress={() => navigation.navigate('foco')}>
                 <SkipForward style={styles.iconNext}/>
             </Botao>
         </View>
-        <Estados color={'purple'} />
-        <Texto>Tempo de Descanso Curto</Texto>
+        <Estados color={'green'} />
+        <Texto>Tempo de Descanso Longo</Texto>
         <Texto>Tarefa 1</Texto>
-        <Botao color={'purple'} >
+        <Botao color={'green'} >
             <CircleHelp style={styles.iconQuestion} />
         </Botao>
     </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#3E2D7C',
+    backgroundColor: 'green',
   },
   input: {
     height: 250,
@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: 'white',
-    color: '#3E2D7C',
+    color: '#green',
     borderRadius: 60,
   },
   iconNext: {
     width: 40,
     height: 40,
-    backgroundColor: '#3E2D7C',
+    backgroundColor: '#green',
     color: 'white',
     borderRadius: 60,
   },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     backgroundColor: 'white',
-    color: '#3E2D7C',
+    color: 'green',
     borderRadius: "100%",
   }
 });
