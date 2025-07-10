@@ -4,29 +4,44 @@ import { CircleHelp, CirclePlay, PauseCircle, SkipForward } from "lucide-react";
 import { Estados } from "../components/estados";
 import { Texto } from "../components/texto";
 import { StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { verificaContagem } from "../utils/verificaContagem";
 
 export function DescansoLongo({ navigation }) {
   const [start, setStart] = useState(false);
-  
+  const [nomeTarefaAtual, setNomeTarefaAtual] = useState('');
+
+  useEffect(() => {
+    const carregarTarefa = async () => {
+      let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
+      if (!nomeTarefa || !nomeTarefa.trim()) {
+        nomeTarefa = 'Tarefa 1';
+      }
+      setNomeTarefaAtual(nomeTarefa);
+      console.log('Tarefa carregada:', nomeTarefa);
+    };
+
+    carregarTarefa();
+  }, []);
+
   const handleStart = () => {
     setStart(!start);
   };
 
   return (
     <View style={styles.container}>
-        <Cronometro color={'green'} time={15} start={start} />
+        <Cronometro color={'green'} time={1} start={start} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Botao color={'green'} onPress={handleStart}>
               {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
             </Botao>
-            <Botao color={'green'} onPress={() => navigation.navigate('foco')}>
+            <Botao color={'green'} onPress={() => verificaContagem(navigation)}>
                 <SkipForward style={styles.iconNext}/>
             </Botao>
         </View>
         <Estados color={'green'} />
         <Texto>Tempo de Descanso Longo</Texto>
-        <Texto>Tarefa 1</Texto>
+        <Texto>{nomeTarefaAtual}</Texto>
         <Botao color={'green'} >
             <CircleHelp style={styles.iconQuestion} />
         </Botao>

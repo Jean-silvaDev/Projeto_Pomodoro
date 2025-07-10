@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { verificaContagem } from '../utils/verificaContagem';
 
-export function Cronometro({ color, time, start }) {
+export function Cronometro({ color, time, start, navigation }) {
   const [ timer, setTimer ] = useState('00:00');
   const [ date, setDate ] = useState();
   
@@ -43,6 +44,12 @@ export function Cronometro({ color, time, start }) {
     if (start === false) {
       setDate(null);
     }
+
+    if (getTimeFormat(getTimeDivided()) === '00:00') {
+      verificaContagem(navigation);
+      setDate(null);
+    }
+
   }, [Date.now(), start]); 
   
   return (
