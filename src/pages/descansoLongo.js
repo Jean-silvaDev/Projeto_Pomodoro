@@ -4,25 +4,28 @@ import { CircleHelp, CirclePlay, PauseCircle, SkipForward } from "lucide-react";
 import { Estados } from "../components/estados";
 import { Texto } from "../components/texto";
 import { StyleSheet, View } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { verificaContagem } from "../utils/verificaContagem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function DescansoLongo({ navigation }) {
   const [start, setStart] = useState(false);
   const [nomeTarefaAtual, setNomeTarefaAtual] = useState('');
 
-  useEffect(() => {
-    const carregarTarefa = async () => {
-      let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
-      if (!nomeTarefa || !nomeTarefa.trim()) {
-        nomeTarefa = 'Tarefa 1';
-      }
-      setNomeTarefaAtual(nomeTarefa);
-      console.log('Tarefa carregada:', nomeTarefa);
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const carregarTarefa = async () => {
+        let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
+        if (!nomeTarefa || !nomeTarefa.trim()) {
+          navigation.natigate('foco');
+        }
+        setNomeTarefaAtual(nomeTarefa);
+      };
 
-    carregarTarefa();
-  }, []);
+      carregarTarefa();
+    }, [])
+  );
 
   const handleStart = () => {
     setStart(!start);
@@ -30,7 +33,7 @@ export function DescansoLongo({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Cronometro color={'green'} time={1} start={start} />
+        <Cronometro color={'green'} time={1} start={start} navigation={navigation} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Botao color={'green'} onPress={handleStart}>
               {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
@@ -41,7 +44,7 @@ export function DescansoLongo({ navigation }) {
         </View>
         <Estados color={'green'} />
         <Texto>Tempo de Descanso Longo</Texto>
-        <Texto>{nomeTarefaAtual}</Texto>
+        <Texto>Tarefa: {nomeTarefaAtual}</Texto>
         <Botao color={'green'} >
             <CircleHelp style={styles.iconQuestion} />
         </Botao>

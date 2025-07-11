@@ -1,60 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { verificaContagem } from '../utils/verificaContagem';
 
 export function Cronometro({ color, time, start, navigation }) {
-  const [ timer, setTimer ] = useState('00:00');
-  const [ date, setDate ] = useState();
-  
-  function getTime() {
-    const now = new Date();
-    if (date == null) {
-      now.setMinutes(now.getMinutes() + time);
-      setDate(now);
-    }
-    return now;
-  }
+  const [remaining, setRemaining] = useState(time * 60); // tempo restante em segundos
+  const intervalRef = useRef(null);
 
-  function getTimeFormat(date) {
-    if (date == null) {
-      return '00:00';
-    }
-
-    if (start === false) {
-      return time === 5 ? `0${time}:00` : `${time}:00`;
-    }
-    const dateF = new Date(date);
-    const minutes = String(dateF.getMinutes()).padStart(2, '0');
-    const seconds = String(dateF.getSeconds()).padStart(2, '0');
-    return `${minutes}:${seconds}`;
-  }
-
-
-  function getTimeDivided() {
-    const timerNow = date - getTime();
-    if (timerNow < 0) {
-      return null;
-    }
-    return date - getTime();
-  }
-  
   useEffect(() => {
-    setTimeout(() => {setTimer((timer) => timer + 1)}, 1000);
-    setTimer(getTime());
-    if (start === false) {
-      setDate(null);
+    if (start) {
+      // iniciar cronômetro
+      intervalRef.current = setInterval(() => {
+        setRemaining((prev) => {
+          if (prev <= 1) {
+            clearInterval(intervalRef.current);
+            verificaContagem(navigation);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      // pausar cronômetro
+      clearInterval(intervalRef.current);
     }
 
-    if (getTimeFormat(getTimeDivided()) === '00:00') {
-      verificaContagem(navigation);
-      setDate(null);
-    }
+    return () => clearInterval(intervalRef.current);
+  }, [start]);
 
-  }, [Date.now(), start]); 
-  
+  useEffect(() => {
+    // resetar cronômetro quando tempo base mudar
+    setRemaining(time * 60);
+  }, [time]);
+
+  const formatTime = (totalSeconds) => {
+    const min = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const sec = String(totalSeconds % 60).padStart(2, '0');
+    return `${min}:${sec}`;
+  };
+
+  const getContainerStyle = () => {
+    if (color === 'red') return styles.containerRed;
+    if (color === 'purple') return styles.containerPurple;
+    if (color === 'green') return styles.containerGreen;
+    return styles.containerRed;
+  };
+
   return (
-    <View style={color == 'red' ? styles.containerRed : (color == 'purple' ? styles.containerPurple : styles.containerGreen)}>
-      <Text style={styles.cronometro}>{getTimeFormat(getTimeDivided())}</Text>
+    <View style={getContainerStyle()}>
+      <Text style={styles.cronometro}>{formatTime(remaining)}</Text>
     </View>
   );
 }

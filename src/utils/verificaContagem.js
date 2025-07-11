@@ -2,11 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function verificaContagem(navigation) {
     const contagem = Number.parseInt(await AsyncStorage.getItem('tempo'));
-    console.log('Contagem atual:', contagem);
 
     if (contagem === 6) {
         await AsyncStorage.removeItem('nomeTarefa');
-        await AsyncStorage.removeItem('tempo');
+        await AsyncStorage.setItem('tempo', '1');
         navigation.navigate('foco');
     } else if (contagem % 2 === 0) {
         await AsyncStorage.setItem('tempo', String(contagem + 1));

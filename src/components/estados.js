@@ -4,12 +4,12 @@ import { Estado } from './estado';
 export function Estados({ color }) {
   return (
     <div style={color == 'red' ? styles.containerRed : (color == 'purple' ? styles.containerPurple : styles.containerGreen)}>
-        <Estado color={color} />        
-        <Estado color={color} />
-        <Estado color={color} />
-        <Estado color={color} />
-        <Estado color={color} />
-        <Estado color={color} />
+        <Estado color={color} id={1} />        
+        <Estado color={color} id={2} />
+        <Estado color={color} id={3} />
+        <Estado color={color} id={4} />
+        <Estado color={color} id={5} />
+        <Estado color={color} id={6} />
     </div>
   );
 }

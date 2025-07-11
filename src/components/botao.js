@@ -1,8 +1,8 @@
 import { TouchableOpacity } from "react-native";
 
-export function Botao({ children, onPress, color }) {
+export function Botao({ children, onPress, color, disabled }) {
   return (
-    <TouchableOpacity onPress={onPress} style={color == 'red' ? styles.botaoRed : (color == 'purple' ? styles.botaoPurple : styles.botaoGreen)}>
+    <TouchableOpacity onPress={onPress} disabled={disabled} style={color == 'red' ? styles.botaoRed : (color == 'purple' ? styles.botaoPurple : styles.botaoGreen)}>
         {children}
     </TouchableOpacity>
   );

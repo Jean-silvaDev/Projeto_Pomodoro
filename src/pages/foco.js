@@ -1,40 +1,41 @@
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Cronometro } from '../components/cronometro';
 import { Botao } from '../components/botao';
 import { Estados } from '../components/estados';
 import { Texto } from '../components/texto';
 import { CircleHelp, CirclePlay, PauseCircle, SkipForward  } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import IniciaPomodoro from '../components/iniciaPomodoro';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { verificaContagem } from '../utils/verificaContagem';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Foco({ navigation }) {
   const [start, setStart] = useState(false);
   const [nomeTarefaAtual, setNomeTarefaAtual] = useState('');
 
-  useEffect(() => {
-    const carregarTarefa = async () => {
-      let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
-      if (!nomeTarefa || !nomeTarefa.trim()) {
-        nomeTarefa = 'Tarefa 1';
-      }
-      setNomeTarefaAtual(nomeTarefa);
-      console.log('Tarefa carregada:', nomeTarefa);
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const carregarTarefa = async () => {
+        let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
+        if (!nomeTarefa || !nomeTarefa.trim()) {
+          nomeTarefa = '';
+        }
+        setNomeTarefaAtual(nomeTarefa);
+      };
 
-    carregarTarefa();
-  }, []);
+      carregarTarefa();
+    }, [])
+  );
+
 
 
   const iniciarPomodoro = async () => {
     let nomeTarefa = await AsyncStorage.getItem('nomeTarefa');
     
     if (!nomeTarefa || !nomeTarefa.trim()) {
-      nomeTarefa = 'Tarefa 1';
+      nomeTarefa = '';
     }
-
-    console.log('Tarefa iniciada:', nomeTarefa);
 
     setNomeTarefaAtual(nomeTarefa);
     
@@ -47,16 +48,19 @@ export default function Foco({ navigation }) {
     <View style={styles.container}>
       <Cronometro color={'red'} time={1} start={start} navigation={navigation} /> 
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        <Botao color={'red'} onPress={iniciarPomodoro}>
+        <Botao color={'red'} onPress={() => setStart(!start)} disabled={nomeTarefaAtual === ''}>
           {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}
         </Botao>
-        <Botao color={'red'} onPress={() => verificaContagem(navigation)}>
+
+        <Botao color={'red'} onPress={() => verificaContagem(navigation)} disabled={nomeTarefaAtual === ''}>
           <SkipForward style={styles.iconNext}/>
         </Botao>
       </View>
       <Estados color={'red'} /> 
-      <Texto>{nomeTarefaAtual}</Texto>
-      {nomeTarefaAtual === 'Tarefa 1' && <IniciaPomodoro />}
+      {nomeTarefaAtual !== '' && <Texto>Tempo de Foco</Texto>}
+      {nomeTarefaAtual !== '' && <Texto>Tarefa: {nomeTarefaAtual}</Texto>}
+      {nomeTarefaAtual === '' && <Texto>Inicie uma tarefa</Texto>}
+      {nomeTarefaAtual === '' && <IniciaPomodoro onNomeTarefaChange={setNomeTarefaAtual} />}
       <Botao color={'red'}>
         <CircleHelp style={styles.iconQuestion} />
       </Botao>

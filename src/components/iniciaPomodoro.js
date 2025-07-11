@@ -1,16 +1,15 @@
-import { CircleHelp } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function IniciaPomodoro() {
+export default function IniciaPomodoro({ onNomeTarefaChange }) {
   const [nomeTarefa, setNomeTarefa] = useState('');
 
   const iniciarPomodoro = async () => {
-    console.log('Tarefa iniciada:', nomeTarefa);
     if (nomeTarefa && nomeTarefa.trim()) {
       await AsyncStorage.setItem('nomeTarefa', nomeTarefa);
       await AsyncStorage.setItem('tempo', 1);
+      onNomeTarefaChange?.(nomeTarefa);
     }
   };
 
