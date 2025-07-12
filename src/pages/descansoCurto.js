@@ -33,7 +33,7 @@ export function DescansoCurto({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Cronometro color={'purple'} time={1} start={start} navigation={navigation} />
+        <Cronometro color={'purple'} time={5} start={start} navigation={navigation} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Botao color={'purple'} onPress={handleStart}>
               {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}

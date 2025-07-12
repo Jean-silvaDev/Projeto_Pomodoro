@@ -8,7 +8,6 @@ export function Estado({ color, id }) {
   useEffect(() => {
     const verificaEstado = async () => {
       const contagem = Number.parseInt(await AsyncStorage.getItem('tempo')) || 1;
-      console.log('Estado atual:', contagem, 'ID:', id);
       setValue(id >= contagem ? 'empty' : 'full');
     };
 

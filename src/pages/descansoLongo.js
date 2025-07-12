@@ -33,7 +33,7 @@ export function DescansoLongo({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Cronometro color={'green'} time={1} start={start} navigation={navigation} />
+        <Cronometro color={'green'} time={15} start={start} navigation={navigation} />
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Botao color={'green'} onPress={handleStart}>
               {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}

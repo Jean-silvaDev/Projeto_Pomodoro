@@ -46,7 +46,7 @@ export default function Foco({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Cronometro color={'red'} time={1} start={start} navigation={navigation} /> 
+      <Cronometro color={'red'} time={25} start={start} navigation={navigation} /> 
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Botao color={'red'} onPress={() => setStart(!start)} disabled={nomeTarefaAtual === ''}>
           {start ? <PauseCircle style={styles.icon} /> : <CirclePlay style={styles.icon} />}

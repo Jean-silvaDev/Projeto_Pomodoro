@@ -8,7 +8,6 @@ export function Cronometro({ color, time, start, navigation }) {
 
   useEffect(() => {
     if (start) {
-      // iniciar cronômetro
       intervalRef.current = setInterval(() => {
         setRemaining((prev) => {
           if (prev <= 1) {
@@ -20,7 +19,6 @@ export function Cronometro({ color, time, start, navigation }) {
         });
       }, 1000);
     } else {
-      // pausar cronômetro
       clearInterval(intervalRef.current);
     }
 
@@ -28,7 +26,6 @@ export function Cronometro({ color, time, start, navigation }) {
   }, [start]);
 
   useEffect(() => {
-    // resetar cronômetro quando tempo base mudar
     setRemaining(time * 60);
   }, [time]);
 
