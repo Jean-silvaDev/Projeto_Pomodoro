@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { verificaContagem } from '../utils/verificaContagem';
 
 export function Cronometro({ color, time, start, navigation }) {
-  const [remaining, setRemaining] = useState(time * 60); // tempo restante em segundos
+  const [remaining, setRemaining] = useState(time * 60);
   const intervalRef = useRef(null);
 
   useEffect(() => {
