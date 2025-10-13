@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
 
 export function Ajuda({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>O que é o Método Pomodoro?</Text>
       
-      <Text style={styles.paragraph}>
+      <Text style={styles.paragraph}> /*Inserção de texto com a estilização styles.paragraph para explicação do método Pomodoro*/
         O Método Pomodoro é uma técnica de gerenciamento de tempo desenvolvida por Francesco Cirillo no final dos anos 1980. A técnica usa um cronômetro para dividir o trabalho em intervalos, tradicionalmente de 25 minutos de duração, separados por breves intervalos.
       </Text>
       
@@ -16,6 +16,10 @@ export function Ajuda({ navigation }) {
       <Text style={styles.listItem}>3. Trabalhe na tarefa até que o alarme toque.</Text>
       <Text style={styles.listItem}>4. Faça uma pausa curta (5 minutos).</Text>
       <Text style={styles.listItem}>5. Após quatro "Pomodoros", faça uma pausa mais longa (15-30 minutos).</Text>
+
+      <TouchableOpacity style={styles.buttonLink} onPress={() => Linking.openURL('https://tecnicapomodoro.com.br')}>
+        <Text style={styles.buttonText}>Saiba Mais</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
         <Text style={styles.buttonText}>Voltar</Text>
@@ -63,5 +67,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  buttonLink: { /*style para botão Saiba Mais*/
+    backgroundColor: 'purple',
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 30,
+    alignItems: 'center',
   }
 });
