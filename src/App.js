@@ -37,6 +37,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { DescansoCurto } from "./pages/descansoCurto";
 import { DescansoLongo } from "./pages/descansoLongo";
+import { Ajuda } from "./pages/ajuda";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,11 @@ export default function App() {
           <Stack.Screen name="foco" component={Foco} />
           <Stack.Screen name="descansoCurto" component={DescansoCurto} />
           <Stack.Screen name="descansoLongo" component={DescansoLongo} />
+          <Stack.Screen
+            name="ajuda"
+            component={Ajuda}
+            options={{ headerShown: true, title: "Sobre o Método Pomodoro" }} // Reativa o cabeçalho para esta tela
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
