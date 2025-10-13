@@ -59,9 +59,6 @@ export function DescansoCurto({ navigation }) {
       <Estados color={"purple"} />
       <Texto>Tempo de Descanso Curto</Texto>
       <Texto>Tarefa: {nomeTarefaAtual}</Texto>
-      <Botao color={"purple"}>
-        <CircleHelp style={styles.iconQuestion} />
-      </Botao>
     </View>
   );
 }
@@ -126,12 +123,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#3E2D7C",
     color: "white",
     borderRadius: 20,
-  },
-  iconQuestion: {
-    width: 25,
-    height: 25,
-    backgroundColor: "white",
-    color: "#3E2D7C",
-    borderRadius: 12.5,
   },
 });
