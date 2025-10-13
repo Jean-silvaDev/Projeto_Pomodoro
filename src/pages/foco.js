@@ -177,7 +177,7 @@ export default function Foco({ navigation }) {
       {nomeTarefaAtual === "" && (
         <IniciaPomodoro onNomeTarefaChange={setNomeTarefaAtual} />
       )}
-      <Botao color={"red"}>
+      <Botao color={"red"} onPress={() => navigation.navigate("ajuda")}>
         <CircleHelp style={styles.iconQuestion} />
       </Botao>
     </View>
