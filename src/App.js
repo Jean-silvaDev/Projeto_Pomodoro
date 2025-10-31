@@ -1,62 +1,59 @@
-// import { View } from 'react-native-web';
-// import Foco from './pages/foco';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { StyleSheet } from 'react-native';
-// import { DescansoCurto } from './pages/descansoCurto';
-// import { DescansoLongo } from './pages/descansoLongo';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <NavigationContainer>
-//         <Stack.Navigator initialRoute="home" screenOptions={{ headerShown: false}} >
-//           <Stack.Screen name="home" component={Foco} />
-//           <Stack.Screen name="foco" component={Foco}  />
-//           <Stack.Screen name="descansoCurto" component={DescansoCurto} />
-//           <Stack.Screen name="descansoLongo" component={DescansoLongo} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </View>
-//   );
-// }
-
-// const Stack = createNativeStackNavigator(); // Criando a pilha de navegação
-
-// const styles = StyleSheet.create({
-//   container: {
-//     width: '100vw',
-//     height: '100vh',
-//   }
-// });
-
+// Importa componentes básicos do React Native
 import { View, Text } from "react-native";
+
+// Importa a tela principal (Página de Foco)
 import Foco from "./pages/foco";
+
+// Importa o container que controla toda a navegação
 import { NavigationContainer } from "@react-navigation/native";
+
+// Importa o modelo de navegação em pilha (stack)
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Importa o StyleSheet para criar estilos
 import { StyleSheet } from "react-native";
+
+// Importa as telas utilizadas no app
 import { DescansoCurto } from "./pages/descansoCurto";
 import { DescansoLongo } from "./pages/descansoLongo";
 import { Ajuda } from "./pages/ajuda";
 
+// Cria um objeto para a navegação do tipo Stack
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    // View principal que ocupa toda a tela
     <View style={styles.container}>
+      
+      {/* Componente responsável por gerenciar a navegação entre telas */}
       <NavigationContainer>
+        
+        {/* Configuração das telas usando Stack Navigator */}
         <Stack.Navigator
-          initialRoute="home"
-          screenOptions={{ headerShown: false }}
+          initialRoute="home" // Rota inicial quando o app abre
+          screenOptions={{ headerShown: false }} // Esconde o header padrão em todas as telas
         >
+          {/* Tela inicial / Home */}
           <Stack.Screen name="home" component={Foco} />
+
+          {/* Tela de Foco (igual à home, acessada por navegação interna) */}
           <Stack.Screen name="foco" component={Foco} />
+
+          {/* Tela de descanso curto */}
           <Stack.Screen name="descansoCurto" component={DescansoCurto} />
+
+          {/* Tela de descanso longo */}
           <Stack.Screen name="descansoLongo" component={DescansoLongo} />
+
+          {/* Tela Ajuda - reativa o cabeçalho */}
           <Stack.Screen
             name="ajuda"
             component={Ajuda}
-            options={{ headerShown: true, title: "Sobre o Método Pomodoro" }} // Reativa o cabeçalho para esta tela
+            options={{
+              headerShown: true, // Mostra o cabeçalho somente nessa tela
+              title: "Sobre o Método Pomodoro" // Título do cabeçalho
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -64,8 +61,9 @@ export default function App() {
   );
 }
 
+// Estilo da View principal
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, // Ocupa toda a altura e largura disponível
   },
 });

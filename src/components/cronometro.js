@@ -1,146 +1,62 @@
-// import { useEffect, useRef, useState } from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-// import { verificaContagem } from '../utils/verificaContagem';
-
-// export function Cronometro({ color, time, start, navigation }) {
-//   const [remaining, setRemaining] = useState(time * 60);
-//   const intervalRef = useRef(null);
-
-//   useEffect(() => {
-//     if (start) {
-//       intervalRef.current = setInterval(() => {
-//         setRemaining((prev) => {
-//           if (prev <= 1) {
-//             clearInterval(intervalRef.current);
-//             verificaContagem(navigation);
-//             return 0;
-//           }
-//           return prev - 1;
-//         });
-//       }, 1000);
-//     } else {
-//       clearInterval(intervalRef.current);
-//     }
-
-//     return () => clearInterval(intervalRef.current);
-//   }, [start]);
-
-//   useEffect(() => {
-//     setRemaining(time * 60);
-//   }, [time]);
-
-//   const formatTime = (totalSeconds) => {
-//     const min = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-//     const sec = String(totalSeconds % 60).padStart(2, '0');
-//     return `${min}:${sec}`;
-//   };
-
-//   const getContainerStyle = () => {
-//     if (color === 'red') return styles.containerRed;
-//     if (color === 'purple') return styles.containerPurple;
-//     if (color === 'green') return styles.containerGreen;
-//     return styles.containerRed;
-//   };
-
-//   return (
-//     <View style={getContainerStyle()}>
-//       <Text style={styles.cronometro}>{formatTime(remaining)}</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   containerRed: {
-//     backgroundColor: 'red',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderColor: 'white',
-//     borderWidth: 2,
-//     borderRadius: "100%",
-//     width: 150,
-//     height: 150,
-//     margin: 20,
-//   },
-//   containerPurple: {
-//     backgroundColor: '#3E2D7C',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderColor: 'white',
-//     borderWidth: 2,
-//     borderRadius: "100%",
-//     width: 150,
-//     height: 150,
-//     margin: 20,
-//   },
-//   containerGreen: {
-//     backgroundColor: 'green',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderColor: 'white',
-//     borderWidth: 2,
-//     borderRadius: "100%",
-//     width: 150,
-//     height: 150,
-//     margin: 20,
-//   },
-//   cronometro: {
-//     fontSize: 30,
-//     color: 'white',
-//   },
-// });
-
-// FILE: components/Cronometro.js
+// Hooks do React para estado, efeitos e referência de intervalos
 import { useEffect, useRef, useState } from "react";
+
+// Componentes do React Native para UI
 import { StyleSheet, Text, View } from "react-native";
+
+// Função utilitária que verifica a contagem do ciclo Pomodoro
 import { verificaContagem } from "../utils/verificaContagem";
 
-// Named export
+// Componente exportado que representa o cronômetro
 export function Cronometro({ color, time, start, navigation }) {
+  // Estado que guarda o tempo restante em segundos
   const [remaining, setRemaining] = useState(time * 60);
+
+  // Referência para armazenar o intervalo, permitindo limpar depois
   const intervalRef = useRef(null);
 
-  // useEffect for timer logic
+  // useEffect para controlar o timer
   useEffect(() => {
-    // Se não for para iniciar, não faz nada.
+    // Se o cronômetro não estiver ativo, não faz nada
     if (!start) {
       return;
     }
 
-    // Inicia o intervalo
+    // Inicia o intervalo de 1 segundo
     intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
         if (prev <= 1) {
-          // Limpa o intervalo quando o tempo acaba
+          // Quando o tempo acaba, limpa o intervalo
           clearInterval(intervalRef.current);
+
+          // Chama a função que controla a navegação entre ciclos
           verificaContagem(navigation);
-          return 0;
+
+          return 0; // Garantir que o cronômetro não vá para negativo
         }
-        return prev - 1;
+        return prev - 1; // Subtrai 1 segundo
       });
     }, 1000);
 
-    // FIX: Função de limpeza aprimorada.
-    // Ela será executada quando o componente for desmontado
-    // ou quando a dependência 'start' mudar.
-    // Isso garante que o intervalo seja sempre limpo.
+    // Limpeza do intervalo quando o componente desmonta ou `start` muda
     return () => {
       clearInterval(intervalRef.current);
     };
   }, [start, navigation]);
 
-  // useEffect to reset the time when the `time` prop changes
+  // useEffect para resetar o tempo sempre que a prop `time` muda
   useEffect(() => {
     setRemaining(time * 60);
   }, [time]);
 
+  // Função para formatar o tempo em MM:SS
   const formatTime = (totalSeconds) => {
     const min = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
     const sec = String(totalSeconds % 60).padStart(2, "0");
     return `${min}:${sec}`;
   };
 
-  // REFINEMENT: Usando um estilo base e aplicando a cor dinamicamente
-  // para evitar repetição de código.
+  // Estilo do container aplicado dinamicamente conforme a cor
   const containerStyle = [
     styles.containerBase,
     { backgroundColor: color === "purple" ? "#3E2D7C" : color },
@@ -148,26 +64,27 @@ export function Cronometro({ color, time, start, navigation }) {
 
   return (
     <View style={containerStyle}>
+      {/* Exibe o tempo formatado */}
       <Text style={styles.cronometro}>{formatTime(remaining)}</Text>
     </View>
   );
 }
 
+// Estilos do cronômetro
 const styles = StyleSheet.create({
-  // REFINEMENT: Estilo base para os containers
+  // Container base compartilhado para todos os cronômetros
   containerBase: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "white",
-    borderWidth: 2,
-    width: 150,
-    height: 150,
-    margin: 20,
-    // FIX: borderRadius corrigido para ser metade da altura/largura
-    borderRadius: 75,
+    alignItems: "center",          // Centraliza conteúdo horizontalmente
+    justifyContent: "center",      // Centraliza conteúdo verticalmente
+    borderColor: "white",          // Borda branca
+    borderWidth: 2,                // Largura da borda
+    width: 150,                     // Largura do cronômetro
+    height: 150,                    // Altura do cronômetro
+    margin: 20,                     // Espaço ao redor
+    borderRadius: 75,              // Forma circular (metade da largura/altura)
   },
   cronometro: {
-    fontSize: 30,
-    color: "white",
+    fontSize: 30,                  // Tamanho da fonte
+    color: "white",                // Cor do texto
   },
 });

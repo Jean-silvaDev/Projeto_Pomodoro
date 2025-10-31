@@ -1,119 +1,78 @@
-// import { useState } from 'react';
-// import { View, TextInput, Button, StyleSheet } from 'react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { Botao } from './botao';
-// import { Play } from 'lucide-react';
-
-// export default function IniciaPomodoro({ onNomeTarefaChange }) {
-//   const [nomeTarefa, setNomeTarefa] = useState('');
-
-//   const iniciarPomodoro = async () => {
-//     if (nomeTarefa && nomeTarefa.trim()) {
-//       await AsyncStorage.setItem('nomeTarefa', nomeTarefa);
-//       await AsyncStorage.setItem('tempo', 1);
-//       onNomeTarefaChange?.(nomeTarefa);
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TextInput style={styles.input}
-//         placeholder='Digite o nome da tarefa...'
-//         value={nomeTarefa}
-//         onChangeText={setNomeTarefa}
-//       />
-//       <Botao color={'red'} onPress={iniciarPomodoro}>
-//         <Play style={styles.icon} />
-//       </Botao>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     padding: 50
-//   },
-//   input: {
-//     height: 250,
-//     width: 250,
-//     borderColor: 'gray',
-//     borderWidth: 2,
-//     margin: 20,
-//     paddingHorizontal: 15,
-//     borderRadius: 5,
-//     backgroundColor: 'white',
-//   },
-//   icon: {
-//     width: 40,
-//     height: 40,
-//     backgroundColor: 'red',
-//     color: 'white',
-//     borderRadius: 60,
-//     marginLeft: -5,
-//   },
-// });
-
-// FILE: components/IniciaPomodoro.js
+// React e hooks
 import { useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
+
+// AsyncStorage para persistência local
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Componente reutilizável de botão
 import { Botao } from "./botao";
+
+// Ícone de play
 import { Play } from "lucide-react-native";
 
-// Default export
+// Componente padrão exportado
+// Recebe uma prop 'onNomeTarefaChange' para atualizar o estado da tarefa no componente pai
 export default function IniciaPomodoro({ onNomeTarefaChange }) {
+  // Estado local para armazenar o nome da tarefa digitada
   const [nomeTarefa, setNomeTarefa] = useState("");
 
+  // Função chamada ao pressionar o botão de iniciar
   const iniciarPomodoro = async () => {
+    // Verifica se o input não está vazio ou com espaços
     if (nomeTarefa && nomeTarefa.trim()) {
+      // Salva o nome da tarefa no AsyncStorage
       await AsyncStorage.setItem("nomeTarefa", nomeTarefa);
-      // FIX: AsyncStorage armazena strings. Convertendo para '1'.
+
+      // Inicializa o contador de tempo (1 = primeiro Pomodoro)
       await AsyncStorage.setItem("tempo", "1");
+
+      // Atualiza o estado do componente pai, se a função foi passada
       onNomeTarefaChange?.(nomeTarefa);
     }
   };
 
   return (
     <View style={styles.container}>
+      {/* Input para o usuário digitar o nome da tarefa */}
       <TextInput
         style={styles.input}
         placeholder="Digite o nome da tarefa..."
-        value={nomeTarefa}
-        onChangeText={setNomeTarefa}
+        value={nomeTarefa}          // Valor do input é o estado local
+        onChangeText={setNomeTarefa} // Atualiza o estado ao digitar
       />
+
+      {/* Botão para iniciar o Pomodoro */}
       <Botao color={"red"} onPress={iniciarPomodoro}>
+        {/* Ícone de play dentro do botão */}
         <Play style={styles.icon} />
       </Botao>
     </View>
   );
 }
 
+// Estilos do componente
 const styles = StyleSheet.create({
   container: {
-    // FIX: Removido 'flex: 1' para evitar problemas de layout.
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20, // Ajustado o padding
+    justifyContent: "center", // Centraliza verticalmente
+    alignItems: "center",     // Centraliza horizontalmente
+    padding: 20,              // Espaçamento interno
   },
   input: {
-    height: 50, // Altura mais razoável para o input
-    width: 250,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20, // Ajustado margin
-    paddingHorizontal: 15,
-    borderRadius: 8,
-    backgroundColor: "white",
+    height: 50,               // Altura do campo de texto
+    width: 250,               // Largura fixa
+    borderColor: "gray",      // Cor da borda
+    borderWidth: 1,           // Espessura da borda
+    marginBottom: 20,         // Espaço abaixo do input
+    paddingHorizontal: 15,    // Espaço interno horizontal
+    borderRadius: 8,          // Cantos arredondados
+    backgroundColor: "white", // Fundo branco
   },
   icon: {
-    width: 40,
-    height: 40,
-    backgroundColor: "red",
-    color: "white",
-    // FIX: borderRadius corrigido para ser metade da altura/largura
-    borderRadius: 20,
+    width: 40,                // Largura do ícone
+    height: 40,               // Altura do ícone
+    backgroundColor: "red",   // Fundo do ícone
+    color: "white",           // Cor do ícone
+    borderRadius: 20,         // Bordas arredondadas (metade da largura/altura)
   },
 });
